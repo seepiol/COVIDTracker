@@ -1,9 +1,10 @@
 import csv
 import datetime
 import requests
+import time
 
-
-# Getting the latest informations
+print("== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==")
+print("\nFetching latest data.....", end="")
 i=0
 date = datetime.date.today()
 date = date.strftime("%m-%d-%Y")
@@ -16,11 +17,15 @@ while daily_report.status_code != 200:
     url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + date + ".csv"
     daily_report = requests.get(url)
 
-
 with open("covid.csv","w") as file:
     file.write(str(daily_report.content.decode("ascii")))
 
-region = input("Insert your country or region (world for all): ").title()
+print(" OK \n(last update:", date, ")\n")
+
+
+time.sleep(0.5)
+region = input("Insert country or region (world for all): ").title()
+print("\n")
 
 if len(region)==2:
     region=region.upper()
@@ -46,31 +51,32 @@ with open("covid.csv") as daily_report:
             total_deaths+=int(row[4])
             total_recovered+=int(row[5])
 
-        if row[1] == region or region == "World":
+        if region in row[0] or region in row[1] or region == "World":
             if row[0] == "Province/State":
                 pass
             else:
-                print(f"{row[0]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
+                print(f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
                 states.append(row[0])
                 confirmed+=int(row[3])
                 deaths+=int(row[4])
                 recovered+=int(row[5])
+                time.sleep(0.05)
 
 
 print(f"""
 
 
-=============================
+================================
 \t☣ COVID-19 ☣
 \t{region.upper()} REPORT
 \t({len(states)} states)
 
 🛑 CONFIRMED CASES = {confirmed}/{total_confirmed}
-❌ DEATHS = {deaths}/{total_deaths}
+💀 DEATHS = {deaths}/{total_deaths}
 ✅ RECOVERED CASES = {recovered}/{total_recovered}
 
    Last update: {date}
-=============================
+================================
 
 """)
 
