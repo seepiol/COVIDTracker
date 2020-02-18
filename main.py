@@ -51,7 +51,7 @@ with open("covid.csv") as daily_report:
             total_deaths+=int(row[4])
             total_recovered+=int(row[5])
 
-        if region in row[0] or region in row[1] or region == "World":
+        if region.lower() in row[0].lower() or region.lower() in row[1].lower() or region == "World":
             if row[0] == "Province/State":
                 pass
             else:
