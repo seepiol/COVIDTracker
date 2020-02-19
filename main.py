@@ -3,7 +3,7 @@ import datetime
 import requests
 import time
 
-print("== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==")
+print("💀 \033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
 print("\nFetching latest data.....", end="")
 i=0
 date = datetime.date.today()
@@ -67,17 +67,74 @@ print(f"""
 
 
 ================================
-\t☣ COVID-19 ☣
+\t\033[91m\033[1m☣ COVID-19 ☣\033[0m
 \t{region.upper()} REPORT
 \t({len(states)} states)
 
-🛑 CONFIRMED CASES = {confirmed}/{total_confirmed}
-💀 DEATHS = {deaths}/{total_deaths}
-✅ RECOVERED CASES = {recovered}/{total_recovered}
+🛑 \033[94m\033[1mCONFIRMED CASES = {confirmed}/{total_confirmed}\033[0m
+💀 \033[91m\033[1mDEATHS = {deaths}/{total_deaths}\033[0m
+✅ \033[92m\033[1mRECOVERED CASES = {recovered}/{total_recovered}\033[0m
 
    Last update: {date}
 ================================
 
 """)
+
+print_info = input("Do you want to display some coronavirus information? <y/n>: ")
+if print_info.lower() in ['y', 'yes']:
+    print("""
+- About \033[91m\033[1mCOVID-19\033[0m
+
+Coronavirus disease 2019 (COVID-19), formerly known as 2019-nCoV acute respiratory disease, is an infectious disease 
+caused by SARS-CoV-2.
+
+The disease is the cause of the 2019-2020 Coronavirus outbreak.
+ 
+It is primarily spread between people via respiratory droplets from infected individuals when they cough or sneeze. 
+
+Time from exposure to onset of symptoms is generally between 2 and 14 days.
+
+Spread can be limited by handwashing and other hygiene measures.
+
+
+- About \033[91m\033[1mSARS-CoV-2\033[0m
+
+Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2), formerly known as the 2019 novel coronavirus (2019-nCoV), 
+is a positive-sense single-stranded RNA virus It is contagious among humans and is the cause 
+of Coronavirus disease (COVID-19).
+
+
+- About \033[91m\033[1m2019-2020 Coronavirus Outbreak\033[0m
+
+The 2019-20 coronavirus outbreak is an ongoing epidemic of Coronavirus disease (COVID-19) caused by SARS-CoV-2, 
+which started in December 2019. It was first identified in Whuan, capital of Hubei, province of China, 
+after 41 people presented with pneumonia of no clear cause. 
+
+- \033[91m\033[1mWHAT SHOULD I DO IF I HAVE COVID-19 SYMPTOMS?\033[0m
+\033[1mCDC (Centers for Disease Control and Prevention) says:
+If you are sick with COVID-19 or suspect you are infected with the virus that causes COVID-19, 
+follow the steps below to help prevent the disease from spreading to people in your home and community.
+
+- Stay home except to get medical care
+- Separate yourself from other people and animals in your home
+- Call ahead before visiting your doctor
+- Wear a facemask
+- Cover your coughs and sneezes
+- Clean your hands often
+- Avoid sharing personal household items
+- Clean all “high-touch” surfaces everyday
+- Monitor your symptoms
+- Discontinuing home isolation
+
+Full post: \033[4mhttps://www.cdc.gov/coronavirus/2019-ncov/about/steps-when-sick.html\033[0m
+
+\033[0m
+
+For a resource list, visit \033[4m https://github.com/seepiol/COVIDTracker/blob/master/README.md\033[0m
+
+    """)
+
+print("Data source: \033[4mhttps://github.com/CSSEGISandData/COVID-19\033[0m")
+input("Press a key to quit the program")
 
 
