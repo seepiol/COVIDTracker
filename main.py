@@ -9,19 +9,27 @@ print("\033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m"
 print("\nFetching latest data.....", end="")
 
 # INTERNATIONAL DATA
-i=0
+i = 0
 date = datetime.date.today()
 date = date.strftime("%m-%d-%Y")
-url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + date + ".csv"
+url = (
+    "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
+    + date
+    + ".csv"
+)
 daily_report = requests.get(url)
 while daily_report.status_code != 200:
     i += 1
     date = datetime.date.today() - datetime.timedelta(i)
     date = date.strftime("%m-%d-%Y")
-    url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + date + ".csv"
+    url = (
+        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
+        + date
+        + ".csv"
+    )
     daily_report = requests.get(url)
 
-with open("covid.csv","w") as file:
+with open("covid.csv", "w") as file:
     file.write(str(daily_report.content.decode("ascii")))
 
 # ITALIAN DATA
@@ -40,14 +48,14 @@ print(" OK \n")
 region = input("Insert country or region (world for all): ").title()
 print("\n")
 
-if len(region)==2:
-    region=region.upper()
-if region == '*':
+if len(region) == 2:
+    region = region.upper()
+if region == "*":
     region = True
 
-total_confirmed=0
-total_deaths=0
-total_recovered=0
+total_confirmed = 0
+total_deaths = 0
+total_recovered = 0
 
 states = []
 confirmed = 0
@@ -60,31 +68,40 @@ with open("covid.csv") as daily_report:
         if row[0] == "Province/State":
             pass
         else:
-            total_confirmed+=int(row[3])
-            total_deaths+=int(row[4])
-            total_recovered+=int(row[5])
+            total_confirmed += int(row[3])
+            total_deaths += int(row[4])
+            total_recovered += int(row[5])
 
-        if region.lower() in row[0].lower() or region.lower() in row[1].lower() or region == "World":
+        if (
+            region.lower() in row[0].lower()
+            or region.lower() in row[1].lower()
+            or region == "World"
+        ):
             if row[0] == "Province/State":
                 pass
             elif row[1] == "Italy":
-                print("Using italian official real-time data)
-                print(f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
+                print("Using italian official real-time data")
+                print(
+                    f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}"
+                )
                 states.append(row[0])
                 confirmed += int(it_confirmed)
                 deaths += int(it_deaths)
                 recovered += int(it_recovered)
                 time.sleep(0.05)
             else:
-                print(f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
+                print(
+                    f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}"
+                )
                 states.append(row[0])
-                confirmed+=int(row[3])
-                deaths+=int(row[4])
-                recovered+=int(row[5])
+                confirmed += int(row[3])
+                deaths += int(row[4])
+                recovered += int(row[5])
                 time.sleep(0.05)
 
 
-print(f"""
+print(
+    f"""
 
 
 ================================
@@ -99,11 +116,13 @@ print(f"""
    Last update: {date}
 ================================
 
-""")
+"""
+)
 
 print_info = input("Do you want to display some coronavirus information? <y/n>: ")
-if print_info.lower() in ['y', 'yes']:
-    print("""
+if print_info.lower() in ["y", "yes"]:
+    print(
+        """
 - About \033[91m\033[1mCOVID-19\033[0m
 
 Coronavirus disease 2019 (COVID-19), formerly known as 2019-nCoV acute respiratory disease, is an infectious disease 
@@ -153,13 +172,13 @@ Full post: \033[4mhttps://www.cdc.gov/coronavirus/2019-ncov/about/steps-when-sic
 
 For a resource list, visit \033[4m https://github.com/seepiol/COVIDTracker/blob/master/README.md\033[0m
 
-    """)
+    """
+    )
 
-print("""
+print(
+    """
 Data source: 
 World: \033[4mhttps://github.com/CSSEGISandData/COVID-19\033[0m
 Italy: \033[4mhttps://bit.ly/2PsV33c\033[0m
-""")
-
-
-
+"""
+)
