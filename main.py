@@ -65,7 +65,7 @@ recovered = 0
 with open("covid.csv") as daily_report:
     parsed_daily_report = csv.reader(daily_report, delimiter=",")
     for row in parsed_daily_report:
-        if row[0] == "Province/State":
+        if row[0] == "Province/State" or row[1] == "Italy":
             pass
         else:
             total_confirmed += int(row[3])
@@ -88,6 +88,9 @@ with open("covid.csv") as daily_report:
                 confirmed += int(it_confirmed)
                 deaths += int(it_deaths)
                 recovered += int(it_recovered)
+                total_confirmed += int(it_confirmed)
+                total_deaths += int(it_deaths)
+                total_recovered += int(it_recovered)
                 time.sleep(0.05)
             else:
                 print(
