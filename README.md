@@ -1,6 +1,14 @@
 # COVID TRACKER
 Simple COVID-19 tracker written in python.
 
+The data fetching process is different from country to country.
+Generally the data are obtained through the CSV files posted daily on github by John Hopkins University
+The italian data are fetched by the Italian department of health by web scraping
+
+When the world situation is selected, all the data, included the italian, come from the JHU repo.
+
+In this way, the world and all the other countries' data are updated daily, while the italian statistics are updated twice a day (11AM and 5PM UTC).
+
 For more information about the COVID-19, SARS-CoV-2 and 2019-2020 Coronavirus Outbreak:
 1. [WHO](https://www.who.int/emergencies/diseases/novel-coronavirus-2019)
 2. [CDC](https://www.cdc.gov/coronavirus/2019-nCoV/)

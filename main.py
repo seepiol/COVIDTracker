@@ -5,8 +5,11 @@ import time
 from bs4 import BeautifulSoup
 import re
 
+spec_data_source = ["Italy"]
+
 print("\033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
 print("\nFetching latest data.....", end="")
+
 
 # INTERNATIONAL DATA
 i = 0
@@ -31,6 +34,7 @@ while daily_report.status_code != 200:
 
 with open("covid.csv", "w") as file:
     file.write(str(daily_report.content.decode("ascii")))
+
 
 # ITALIAN DATA
 it_url = "http://www.salute.gov.it/portale/nuovocoronavirus/dettaglioContenutiNuovoCoronavirus.jsp?lingua=italiano&id=5351&area=nuovoCoronavirus&menu=vuoto"
@@ -65,33 +69,17 @@ recovered = 0
 with open("covid.csv") as daily_report:
     parsed_daily_report = csv.reader(daily_report, delimiter=",")
     for row in parsed_daily_report:
-        if row[0] == "Province/State" or row[1] == "Italy":
+        if row[0] == "Province/State":
             pass
-        else:
-            total_confirmed += int(row[3])
-            total_deaths += int(row[4])
-            total_recovered += int(row[5])
+
 
         if (
-            region.lower() in row[0].lower()
+                (region.lower() in row[0].lower()
             or region.lower() in row[1].lower()
-            or region == "World"
+            or region == "World") and region not in spec_data_source
         ):
             if row[0] == "Province/State":
                 pass
-            elif row[1] == "Italy":
-                print("Using italian official real-time data")
-                print(
-                    f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}"
-                )
-                states.append(row[0])
-                confirmed += int(it_confirmed)
-                deaths += int(it_deaths)
-                recovered += int(it_recovered)
-                total_confirmed += int(it_confirmed)
-                total_deaths += int(it_deaths)
-                total_recovered += int(it_recovered)
-                time.sleep(0.05)
             else:
                 print(
                     f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}"
@@ -101,7 +89,12 @@ with open("covid.csv") as daily_report:
                 deaths += int(row[4])
                 recovered += int(row[5])
                 time.sleep(0.05)
-
+        elif region == "Italy":
+            print("[!] Using different data source")
+            confirmed = it_confirmed
+            deaths = it_deaths
+            recovered = it_recovered
+            break
 
 print(
     f"""
@@ -112,11 +105,10 @@ print(
 \t{region.upper()} REPORT
 \t({len(states)} states)
 
-🛑 \033[94m\033[1mCONFIRMED CASES = {confirmed}/{total_confirmed}\033[0m
-💀 \033[91m\033[1mDEATHS = {deaths}/{total_deaths}\033[0m
-✅ \033[92m\033[1mRECOVERED CASES = {recovered}/{total_recovered}\033[0m
+🛑 \033[94m\033[1mCONFIRMED CASES = {confirmed}\033[0m
+💀 \033[91m\033[1mDEATHS = {deaths}\033[0m
+✅ \033[92m\033[1mRECOVERED CASES = {recovered}\033[0m
 
-   Last update: {date}
 ================================
 
 """
