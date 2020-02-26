@@ -2,9 +2,13 @@ import csv
 import datetime
 import requests
 import time
+from bs4 import BeautifulSoup
+import re
 
-print("💀 \033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
+print("💀\033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
 print("\nFetching latest data.....", end="")
+
+# INTERNATIONAL DATA
 i=0
 date = datetime.date.today()
 date = date.strftime("%m-%d-%Y")
@@ -20,10 +24,19 @@ while daily_report.status_code != 200:
 with open("covid.csv","w") as file:
     file.write(str(daily_report.content.decode("ascii")))
 
-print(" OK \n(last update:", date, ")\n")
+# ITALIAN DATA
+it_url = "http://www.salute.gov.it/portale/nuovocoronavirus/dettaglioContenutiNuovoCoronavirus.jsp?lingua=italiano&id=5351&area=nuovoCoronavirus&menu=vuoto"
+it_gov_page = BeautifulSoup(requests.get(it_url).text, features="html5lib")
+numbers = str(it_gov_page.findAll("div", {"class": "col-lg-4 col-md-12 col-sm-12"}))
+datas = re.findall(">\d*<", numbers)
+it_confirmed = datas[0][1:-1]
+it_deaths = datas[1][1:-1]
+it_recovered = datas[2][1:-1]
 
 
-time.sleep(0.5)
+print(" OK \n")
+
+
 region = input("Insert country or region (world for all): ").title()
 print("\n")
 
@@ -54,6 +67,14 @@ with open("covid.csv") as daily_report:
         if region.lower() in row[0].lower() or region.lower() in row[1].lower() or region == "World":
             if row[0] == "Province/State":
                 pass
+            elif row[1] == "Italy":
+                print("Using italian official real-time data)
+                print(f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
+                states.append(row[0])
+                confirmed += int(it_confirmed)
+                deaths += int(it_deaths)
+                recovered += int(it_recovered)
+                time.sleep(0.05)
             else:
                 print(f"- {row[0]}, {row[1]}: Confirmed Case = {row[3]} Death = {row[4]} Recovered = {row[5]}")
                 states.append(row[0])
@@ -134,7 +155,11 @@ For a resource list, visit \033[4m https://github.com/seepiol/COVIDTracker/blob/
 
     """)
 
-print("Data source: \033[4mhttps://github.com/CSSEGISandData/COVID-19\033[0m")
-input("Press a key to quit the program")
+print("""
+Data source: 
+World: \033[4mhttps://github.com/CSSEGISandData/COVID-19\033[0m
+Italy: \033[4mhttps://bit.ly/2PsV33c\033[0m
+""")
+
 
 
