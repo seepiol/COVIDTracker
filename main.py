@@ -5,7 +5,7 @@ import time
 from bs4 import BeautifulSoup
 import re
 
-print("💀\033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
+print("\033[91m\033[1m== ☣ COVID-19 - SARS-CoV-2 Spread Tracker ☣ ==\033[0m")
 print("\nFetching latest data.....", end="")
 
 # INTERNATIONAL DATA
