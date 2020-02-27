@@ -44,6 +44,7 @@ datas = re.findall(">\d*<", numbers)
 it_confirmed = datas[0][1:-1]
 it_deaths = datas[1][1:-1]
 it_recovered = datas[2][1:-1]
+it_last_update = re.findall("La situazione in Italia: \d*\D*\d*, ore \d*.\d*", str(it_gov_page))[0][25:]
 
 
 print(" OK \n")
@@ -109,6 +110,9 @@ print(
 💀 \033[91m\033[1mDEATHS = {deaths}\033[0m
 ✅ \033[92m\033[1mRECOVERED CASES = {recovered}\033[0m
 
+Last update
+World: {date}
+Italy: {it_last_update}
 ================================
 
 """
