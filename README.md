@@ -28,7 +28,12 @@ In the same folder, type
 ```
 python main.py
 ```
-insert the contry that you want and view the spreading data
+insert the contry that you want and view the spreading data.
+
+If you want to write the country as a cli argument, type for example
+```
+python3 main.py iran
+```
 
 
 ## About COVID-19

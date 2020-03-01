@@ -4,6 +4,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import re
+import sys
 
 spec_data_source = ["Italy"]
 
@@ -49,8 +50,11 @@ it_last_update = re.findall("La situazione in Italia: \d*\D*\d*, ore \d*.\d*", s
 
 print(" OK \n")
 
-
-region = input("Insert country or region (world for all): ").title()
+if len(sys.argv) > 1 :
+    region = sys.argv[1].title()
+    print(f"Selected {region}")
+else:
+    region = input("Insert country or region (world for all): ").title()
 print("\n")
 
 if len(region) == 2:
