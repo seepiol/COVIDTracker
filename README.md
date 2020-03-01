@@ -23,7 +23,7 @@ pip install -r requirements.txt
 ```
 This will install all the python modules that the program need
 
-### Run The Program
+## Run The Program
 In the same folder, type
 ```
 python main.py
