@@ -1,6 +1,7 @@
 # COVID TRACKER
 Simple COVID-19 tracker written in python.
 
+![COVIDTracker](https://user-images.githubusercontent.com/60071372/75629114-91318e00-5bdf-11ea-8907-626c48308853.gif)
 
 ## How To Install
 ### Install GIT
@@ -32,8 +33,10 @@ insert the contry that you want and view the spreading data.
 
 If you want to write the country as a cli argument, type for example
 ```
-python3 main.py iran
+python3 main.py france
 ```
+
+![CLIarguments](https://user-images.githubusercontent.com/60071372/75629129-a0b0d700-5bdf-11ea-8185-ff837d315e53.gif)
 
 
 ## About COVID-19
