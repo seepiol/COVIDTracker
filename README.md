@@ -57,6 +57,8 @@ python3 main.py france
 
 ![CLIarguments](https://user-images.githubusercontent.com/60071372/75629129-a0b0d700-5bdf-11ea-8185-ff837d315e53.gif)
 
+### Mail Sender
+A version of this program that sends the reports with the SMTP protocol (e-mail) will be uploaded soon.
 
 
 **Thanks to JHU and Dipartimento della Protezione Civile for the data publication**
