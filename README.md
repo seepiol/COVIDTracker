@@ -1,5 +1,7 @@
 # COVID TRACKER
 
+MOVED TO GITLAB (https://gitlab.com/seepiol/covidtracker) 
+
 Simple COVID-19 tracker written in python3. 
 
 ![COVIDTracker](https://user-images.githubusercontent.com/60071372/75629114-91318e00-5bdf-11ea-8907-626c48308853.gif)
